@@ -8,12 +8,6 @@ import { NewsModule } from './news/news.module';
 @Module({
   imports: [NewsModule],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: AccessGuard,
-    }
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

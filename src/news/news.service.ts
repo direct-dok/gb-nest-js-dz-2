@@ -1,9 +1,11 @@
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { CreateSubCommentDto } from './dto/create-subcomment.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
 import { News } from './entities/news.entity';
 import { Comment } from './entities/comment.entity';
+import { SubComment } from './entities/subcomment.entity';
 
 @Injectable()
 export class NewsService {
@@ -20,6 +22,14 @@ export class NewsService {
           author: 'Sergey',
           text: 'Comment 1',
           date: new Date(),
+          subcomment: [
+            {
+              id: 1,
+              author: 'Andry',
+              text: 'Sub Comment 1',
+              date: new Date(),
+            }
+          ],
         }
       ],
       date: new Date(),
@@ -71,17 +81,34 @@ export class NewsService {
   }
 
   createComment(createCommentDto: CreateCommentDto) {
-    const newsId = createCommentDto.id;
+    const newsId = createCommentDto.newsId;
     const news = this.findOne(newsId);
 
     const comment:Comment = {
       id: news.comments.length + 1,
       author: "Viktor",
       text: createCommentDto.text,
+      subcomment: [],
       date: new Date().toUTCString(),
     };
 
     this.news[newsId - 1].comments.push(comment);
+  }
+
+  createSubComment(createSubCommentDto: CreateSubCommentDto) {
+    const newsId = createSubCommentDto.newsId;
+    const commentId = createSubCommentDto.commentId;
+
+    console.log(this.news[newsId - 1].comments[commentId - 1])
+
+    const subComment:SubComment = {
+      id: this.news[newsId - 1].comments[commentId - 1].subcomment.length + 1,
+      author: "Sergey23",
+      text: createSubCommentDto.text,
+      date: new Date().toUTCString(),
+    }
+
+    this.news[newsId - 1].comments[commentId - 1].subcomment.push(subComment);
   }
 
   findAll() {

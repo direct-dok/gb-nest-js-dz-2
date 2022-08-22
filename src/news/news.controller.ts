@@ -3,6 +3,7 @@ import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { CreateSubCommentDto } from './dto/create-subcomment.dto';
 import { Public } from 'src/decorators/public.decorator';
 
 @Controller('news')
@@ -17,6 +18,11 @@ export class NewsController {
   @Post("comment")
   createComment(@Body() createCommentDto: CreateCommentDto) {
     return this.newsService.createComment(createCommentDto);
+  }
+
+  @Post("subcomment")
+  createSubComment(@Body() createSubCommentDto: CreateSubCommentDto) {
+    return this.newsService.createSubComment(createSubCommentDto);
   }
 
   @Get()
