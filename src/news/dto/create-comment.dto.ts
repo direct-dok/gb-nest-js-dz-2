@@ -1,4 +1,4 @@
 export class CreateCommentDto {
-    id: number;
+    newsId: number;
     text: string;
 }
